@@ -1,3 +1,6 @@
 [submodule "whoosh/libzynth"]
 	path = whoosh/libzynth
 	url = https://github.com/wtrsltnk/libzynth
+[submodule "bam/libzynth"]
+	path = bam/libzynth
+	url = https://github.com/wtrsltnk/libzynth

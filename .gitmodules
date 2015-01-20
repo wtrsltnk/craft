@@ -1,1 +1,4 @@
 
+[submodule "libzynth"]
+	path = libzynth
+	url = https://github.com/wtrsltnk/libzynth.git

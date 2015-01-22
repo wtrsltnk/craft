@@ -1,8 +1,8 @@
+#ifndef MIXER
+#define MIXER
+
 #include <Nio/Nio.h>
-#include <globals.h>
-#include <signal.h>
 #include <pthread.h>
-#include <iostream>
 
 class Mixer : public IMixer
 {
@@ -24,27 +24,5 @@ public:
     virtual void SetProgram(char chan, unsigned int pgm) { }
 };
 
-void sigterm_exit(int /*sig*/)
-{
-    Nio::Stop();
-}
+#endif // MIXER
 
-int main(int argc, char* argv[])
-{
-    synth = new Settings();
-
-    signal(SIGINT, sigterm_exit);
-    signal(SIGTERM, sigterm_exit);
-
-    Mixer mixer;
-    Nio::Start(&mixer, synth);
-
-    Nio::SetSink("PA");
-    Nio::SetSource("PA");
-
-    while (true)
-    { }
-
-    Nio::Stop();
-    return 0;
-}

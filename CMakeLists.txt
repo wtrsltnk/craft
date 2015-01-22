@@ -6,7 +6,7 @@ set(VERSION "1.0.0")
 add_subdirectory(libzynth/src)
 
 include_directories(
-    ../libzynth/src
+    libzynth/src
     ${FFTW_INCLUDE_DIR}
     ${MXML_INCLUDE_DIR}
     ${PTHREAD_INCLUDE_DIR}
@@ -14,3 +14,4 @@ include_directories(
 
 add_subdirectory(whoosh)
 add_subdirectory(bam)
+add_subdirectory(midi-recorder)

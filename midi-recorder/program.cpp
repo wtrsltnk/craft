@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     MainWindow wnd;
-    Nio::Start(&wnd, synth);
+    Nio::Start(&(wnd.master), synth);
 
     Nio::SetSink("PA");
     Nio::SetSource("RT");

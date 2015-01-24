@@ -1,6 +1,6 @@
 
 add_executable(whoosh
-    whoosh.cpp
+    program.cpp
     )
     
 target_link_libraries(whoosh

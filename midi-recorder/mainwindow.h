@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <Nio/Nio.h>
 #include <Misc/Master.h>
+#include "midirecorder.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,7 +18,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    Master master;
+    Master _master;
+    MidiRecorder _recorder;
 
 private:
     Ui::MainWindow *ui;

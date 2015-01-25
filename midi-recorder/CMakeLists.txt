@@ -2,11 +2,13 @@ set(midi_recorder_SRCS
     program.cpp
     mainwindow.cpp
     midiclip.cpp
+    midirecorder.cpp
     )
 
 set(midi_recorder_HEADERS
     mainwindow.h
     midiclip.h
+    midirecorder.h
     )
 
 set(midi_recorder_FORMS

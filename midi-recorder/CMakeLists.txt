@@ -1,18 +1,23 @@
 set(midi_recorder_SRCS
     program.cpp
     mainwindow.cpp
+    instrumentselectiondialog.cpp
     midiclip.cpp
     midirecorder.cpp
+    noteview.cpp
     )
 
 set(midi_recorder_HEADERS
     mainwindow.h
+    instrumentselectiondialog.h
     midiclip.h
     midirecorder.h
+    noteview.h
     )
 
 set(midi_recorder_FORMS
     mainwindow.ui
+    instrumentselectiondialog.ui
     )
 
 find_package(Qt5Core REQUIRED)

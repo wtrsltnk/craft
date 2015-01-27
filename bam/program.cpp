@@ -37,11 +37,16 @@ int main(int argc, char* argv[])
     signal(SIGINT, sigterm_exit);
     signal(SIGTERM, sigterm_exit);
 
-    Mixer mixer;
-    Nio::Start(&mixer, synth);
+    Nio::Start(synth);
 
     Nio::SetSink("PA");
     Nio::SetSource("PA");
+
+    Mixer mixer;
+    Nio::AddMixer(&mixer);
+
+    while (true)
+    { }
 
     Nio::Stop();
     return 0;

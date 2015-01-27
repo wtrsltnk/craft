@@ -1,9 +1,20 @@
 #ifndef MIDIRECORDER_H
 #define MIDIRECORDER_H
 
+#include "midiclip.h"
 #include "Nio/IMixer.h"
 #include <pthread.h>
+#include <QElapsedTimer>
 
+namespace RecorderState
+{
+enum eState
+{
+    Stopped,
+    Ready,
+    Started
+};
+}
 class MidiRecorder : public IMixer
 {
     pthread_mutex_t mutex;
@@ -25,9 +36,15 @@ public:
     void StartRecording();
     void StopRecording();
 
+    RecorderState::eState GetState();
+    MidiClip* GetCurrentClip() { return this->_clip; }
+
+private:
     bool _ready;
-    bool _started;
+    QElapsedTimer* _timer;
     double _startTime;
+    MidiNote* _runningNotes[256];
+    MidiClip* _clip;
 };
 
 #endif // MIDIRECORDER_H

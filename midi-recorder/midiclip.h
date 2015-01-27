@@ -2,17 +2,18 @@
 #define MIDICLIP_H
 
 #include <vector>
+#include <qglobal.h>
 
 class MidiNote
 {
 public:
-    MidiNote();
-    virtual ~MidiNote();
+    MidiNote() { }
+    virtual ~MidiNote() { }
 
     char _note;
     char _velocity;
-    double _start;
-    double _end;
+    qint64 _start;
+    qint64 _end;
 };
 
 class MidiClip

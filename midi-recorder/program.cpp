@@ -17,6 +17,8 @@ int main(int argc, char* argv[])
 {
     synth = new Settings();
 
+    config.Init();
+
     //produce denormal buf
     denormalkillbuf = new float [synth->buffersize];
     for(int i = 0; i < synth->buffersize; ++i)
@@ -27,18 +29,20 @@ int main(int argc, char* argv[])
 
     QApplication app(argc, argv);
 
-    MainWindow wnd;
-    Nio::Start(&(wnd._master), synth);
-    Nio::AddMixer(&(wnd._recorder));
+    Nio::Start(synth);
 
     Nio::SetSink("PA");
     Nio::SetSource("RT");
 
+    MainWindow wnd;
+    Nio::AddMixer(&(wnd._recorder));
     wnd.show();
 
     int result = app.exec();
 
     delete [] denormalkillbuf;
     Nio::Stop();
+    config.Save();
+
     return result;
 }

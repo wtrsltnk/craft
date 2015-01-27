@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsScene>
+#include <QTimer>
 #include <Nio/Nio.h>
 #include <Misc/Master.h>
 #include "midirecorder.h"
@@ -21,8 +23,20 @@ public:
     Master _master;
     MidiRecorder _recorder;
 
+    void SetRecorderState(RecorderState::eState state);
+
+public slots:
+    void OnTimerOut();
+    void OnGetReady();
+    void OnStart();
+    void OnStop();
+    void OnChangeInput(QAction* action);
+    void OnChangeInstrument();
+
 private:
     Ui::MainWindow *ui;
+    QTimer _timer;
+    QGraphicsScene _scene;
 
 };
 

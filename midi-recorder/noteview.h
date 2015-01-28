@@ -2,6 +2,16 @@
 #define NOTEVIEW_H
 
 #include <QGraphicsView>
+#include <QGraphicsRectItem>
+
+class NoteItem : public QGraphicsRectItem
+{
+public:
+    NoteItem(class MidiNote* note, QGraphicsItem *parent = 0);
+    virtual ~NoteItem();
+
+    class MidiNote* _note;
+};
 
 class NoteView : public QGraphicsView
 {
@@ -16,7 +26,6 @@ private:
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
     virtual void drawBackground(QPainter *p, const QRectF& crect);
-    virtual void resize(int w, int h);
 
     bool _pan;
     int _panStartX, _panStartY;

@@ -1,6 +1,23 @@
 #include "noteview.h"
 #include <QMouseEvent>
 #include <QScrollBar>
+#include "midiclip.h"
+
+NoteItem::NoteItem(MidiNote* note, QGraphicsItem *parent)
+    : QGraphicsRectItem(parent), _note(note)
+{
+    qreal x = note->_start / 10;
+    qreal y = int(note->_note) * 12;
+    qreal w = (note->_end - note->_start) / 10;
+    qreal h = 12;
+
+    this->setRect(x, y, w, h);
+    this->setBrush(QBrush(Qt::red));
+    this->setPen(QPen(Qt::transparent));
+}
+
+NoteItem::~NoteItem()
+{ }
 
 NoteView::NoteView(QWidget *parent)
     : QGraphicsView(parent)
@@ -47,7 +64,6 @@ void NoteView::mouseMoveEvent(QMouseEvent *event)
         return;
     }
     event->ignore();
-
 }
 
 void NoteView::drawBackground(QPainter *p, const QRectF& rect)
@@ -100,13 +116,4 @@ void NoteView::drawBackground(QPainter *p, const QRectF& rect)
     p->drawLines(vlines.data(), vlines.size());
     p->setPen(darkGrayThick);
     p->drawLine(QLineF(0, rect.top(), 0, rect.bottom()));
-}
-
-void NoteView::resize(int w, int h)
-{
-    QRectF r = this->scene()->sceneRect();
-    r.setHeight(12 * 256);
-    if (r.width() < w)
-        r.setWidth(w);
-    this->scene()->setSceneRect(r);
 }

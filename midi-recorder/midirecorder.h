@@ -15,6 +15,7 @@ enum eState
     Started
 };
 }
+
 class MidiRecorder : public IMixer
 {
     pthread_mutex_t mutex;
@@ -32,13 +33,14 @@ public:
     virtual void SetController(char chan, int type, int par) { }
     virtual void SetProgram(char chan, unsigned int pgm) { }
 
-    void GetReadyToRecord();
-    void StartRecording();
+    void GetReadyToRecord(MidiClip* clip);
+    void StartRecording(MidiClip* clip);
     void StopRecording();
 
     RecorderState::eState GetState();
     MidiClip* GetCurrentClip() { return this->_clip; }
 
+    qint64 CurrentTime();
 private:
     bool _ready;
     QElapsedTimer* _timer;

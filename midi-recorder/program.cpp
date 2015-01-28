@@ -36,6 +36,7 @@ int main(int argc, char* argv[])
 
     MainWindow wnd;
     Nio::AddMixer(&(wnd._recorder));
+    Nio::AddMixer(&(wnd._master));
     wnd.show();
 
     int result = app.exec();

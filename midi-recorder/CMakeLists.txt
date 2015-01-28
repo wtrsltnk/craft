@@ -4,6 +4,7 @@ set(midi_recorder_SRCS
     instrumentselectiondialog.cpp
     midiclip.cpp
     midirecorder.cpp
+    midiplayer.cpp
     noteview.cpp
     )
 
@@ -12,6 +13,7 @@ set(midi_recorder_HEADERS
     instrumentselectiondialog.h
     midiclip.h
     midirecorder.h
+    midiplayer.h
     noteview.h
     )
 

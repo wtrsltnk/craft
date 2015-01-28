@@ -17,13 +17,16 @@ public:
     ~InstrumentSelectionDialog();
 
     QString& selectedInstrument() { return this->_selectedInstrument; }
+    int selectedSlot() { return this->_selectedSlot; }
 
 public slots:
     void OnSelectedBankChanged(int index);
+    void OnSelectedInstrumentChanged();
 
 private:
     Ui::InstrumentSelectionDialog *ui;
     QString _selectedInstrument;
+    int _selectedSlot;
     Master& _master;
 };
 

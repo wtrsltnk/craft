@@ -12,6 +12,14 @@ MidiRecorder::MidiRecorder()
 MidiRecorder::~MidiRecorder()
 { }
 
+qint64 MidiRecorder::CurrentTime()
+{
+    if (this->_timer != 0)
+        return this->_timer->elapsed();
+
+    return 0;
+}
+
 void MidiRecorder::NoteOn(char chan, char note, char velocity)
 {
     if (this->_ready)
@@ -20,16 +28,18 @@ void MidiRecorder::NoteOn(char chan, char note, char velocity)
         {
             this->_timer = new QElapsedTimer();
             this->_timer->start();
-            this->_clip = new MidiClip();
         }
 
         if (this->_runningNotes[note] == 0)
         {
-            this->_runningNotes[note] = new MidiNote();
-            this->_clip->_notes.push_back(this->_runningNotes[note]);
+            this->_runningNotes[note] = new MidiNote(this->_clip->_lastNote);
+            this->_clip->_lastNote = this->_runningNotes[note];
+            if (this->_clip->_firstNote == 0)
+                this->_clip->_firstNote = this->_clip->_lastNote;
             this->_runningNotes[note]->_note = note;
             this->_runningNotes[note]->_velocity = velocity;
             this->_runningNotes[note]->_start = this->_timer->elapsed();
+            this->_runningNotes[note]->_end = this->_timer->elapsed();
         }
     }
 }
@@ -57,8 +67,9 @@ RecorderState::eState MidiRecorder::GetState()
     return RecorderState::Started;
 }
 
-void MidiRecorder::GetReadyToRecord()
+void MidiRecorder::GetReadyToRecord(MidiClip* clip)
 {
+    this->_clip = clip;
     if (this->_timer == 0)
     {
         this->_ready = true;
@@ -69,22 +80,20 @@ void MidiRecorder::GetReadyToRecord()
     }
 }
 
-void MidiRecorder::StartRecording()
+void MidiRecorder::StartRecording(MidiClip* clip)
 {
     this->_ready = true;
     this->_timer = new QElapsedTimer();
     this->_timer->start();
-    this->_clip = new MidiClip();
+    this->_clip = clip;
 }
 
 void MidiRecorder::StopRecording()
 {
     for (int i = 0; i < 256; i++)
-    {
         if (this->_runningNotes[i] != 0)
             this->_runningNotes[i]->_end = this->_timer->elapsed();
 
-    }
     this->_ready = false;
     delete this->_timer;
     this->_timer = 0;

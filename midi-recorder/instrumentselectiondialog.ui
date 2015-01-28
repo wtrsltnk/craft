@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>617</width>
-    <height>392</height>
+    <width>838</width>
+    <height>620</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,11 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QComboBox" name="cmbBank"/>
+         <widget class="QComboBox" name="cmbBank">
+          <property name="maxVisibleItems">
+           <number>25</number>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QListWidget" name="lstInstruments"/>

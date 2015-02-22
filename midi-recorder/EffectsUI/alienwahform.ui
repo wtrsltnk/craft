@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AlienWahForm</class>
+ <widget class="QWidget" name="AlienWahForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>362</width>
+    <height>357</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Alien Wah</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_4">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="layoutVolume">
+     <item>
+      <widget class="QDial" name="dialVolume">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblVolume">
+       <property name="text">
+        <string>Volume</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <widget class="QGroupBox" name="grbLFO">
+     <property name="title">
+      <string>LFO</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="layoutLFOFrequency">
+        <item>
+         <widget class="QDial" name="dialLFOFrequency"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblLFOFrequency">
+          <property name="text">
+           <string>Frequency</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1">
+       <layout class="QVBoxLayout" name="layoutLFORandomness">
+        <item>
+         <widget class="QDial" name="dialLFORandomness"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblLFORandomness">
+          <property name="text">
+           <string>Randomness</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="2">
+       <layout class="QVBoxLayout" name="layoutLFOStereo">
+        <item>
+         <widget class="QDial" name="dialLFOStereo"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblLFOStereo">
+          <property name="text">
+           <string>Stereo</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0" colspan="3">
+       <layout class="QHBoxLayout" name="layoutLFOType">
+        <item>
+         <widget class="QLabel" name="lblLFOType">
+          <property name="text">
+           <string>Type</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cmbLFOType"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Alien Wah</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="layoutPan">
+          <item>
+           <widget class="QDial" name="dialPan"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblPan">
+            <property name="text">
+             <string>Pan</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1">
+         <layout class="QVBoxLayout" name="layoutDelay">
+          <item>
+           <widget class="QDial" name="dialDelay"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblDelay">
+            <property name="text">
+             <string>Delay</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="2">
+         <layout class="QVBoxLayout" name="layoutLRCrossover">
+          <item>
+           <widget class="QDial" name="dialLRCrossover"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblLRCrossover">
+            <property name="text">
+             <string>L/R Crossover</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <layout class="QVBoxLayout" name="layoutFeedback">
+          <item>
+           <widget class="QDial" name="dialFeedback"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblFeedback">
+            <property name="text">
+             <string>Feedback</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="1">
+         <layout class="QVBoxLayout" name="layoutDepth">
+          <item>
+           <widget class="QDial" name="dialDepth"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblDepth">
+            <property name="text">
+             <string>Depth</string>
+            </property>
+            <property name="textFormat">
+             <enum>Qt::PlainText</enum>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="2">
+         <layout class="QVBoxLayout" name="layoutPhase">
+          <item>
+           <widget class="QDial" name="dialPhase"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblPhase">
+            <property name="text">
+             <string>Phase</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

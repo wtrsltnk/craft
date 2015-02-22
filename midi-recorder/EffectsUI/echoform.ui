@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EchoForm</class>
+ <widget class="QWidget" name="EchoForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>386</width>
+    <height>207</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Echo</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="layoutVolume">
+     <item>
+      <widget class="QDial" name="dialVolume">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblVolume">
+       <property name="text">
+        <string>Volume</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="1">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Echo</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="layoutPan">
+        <item>
+         <widget class="QDial" name="dialPan"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblPan">
+          <property name="text">
+           <string>Pan</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1">
+       <layout class="QVBoxLayout" name="layoutDelay">
+        <item>
+         <widget class="QDial" name="dialDelay"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblDelay">
+          <property name="text">
+           <string>Delay</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <layout class="QVBoxLayout" name="layoutFeedback">
+        <item>
+         <widget class="QDial" name="dialFeedback"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblFeedback">
+          <property name="text">
+           <string>Feedback</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="1">
+       <layout class="QVBoxLayout" name="layoutDampening">
+        <item>
+         <widget class="QDial" name="dialDampening"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblDampening">
+          <property name="text">
+           <string>Dampening</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QGroupBox" name="grbLR">
+     <property name="title">
+      <string>L/R</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="layoutLRDelay">
+        <item>
+         <widget class="QDial" name="dialLRDelay"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblLRDelay">
+          <property name="text">
+           <string>Delay</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <layout class="QVBoxLayout" name="layoutLRCrossover">
+        <item>
+         <widget class="QDial" name="dialLRCrossover"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblLRCrossover">
+          <property name="text">
+           <string>Crossover</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

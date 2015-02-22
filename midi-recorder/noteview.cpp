@@ -28,7 +28,7 @@ NoteView::~NoteView()
 
 void NoteView::mousePressEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton)
+    if (event->button() == Qt::MiddleButton)
     {
         this->_pan = true;
         this->_panStartX = event->x();
@@ -42,7 +42,7 @@ void NoteView::mousePressEvent(QMouseEvent *event)
 
 void NoteView::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton)
+    if (event->button() == Qt::MiddleButton)
     {
         this->_pan = false;
         setCursor(Qt::ArrowCursor);
@@ -68,14 +68,11 @@ void NoteView::mouseMoveEvent(QMouseEvent *event)
 
 void NoteView::drawBackground(QPainter *p, const QRectF& rect)
 {
-    static QBrush lightGray(Qt::lightGray);
-    static QBrush gray(Qt::gray);
     static QPen transparent(Qt::transparent);
-    static QPen darkGray(Qt::darkGray);
     static QPen darkGrayThick(QBrush(Qt::darkGray), 3.0);
 
     const QBrush& b = p->brush();
-    p->setBrush(lightGray);
+    p->setBrush(this->palette().background());
     p->setPen(transparent);
     p->drawRect(rect);
     const int gridSize = 12;
@@ -93,10 +90,10 @@ void NoteView::drawBackground(QPainter *p, const QRectF& rect)
         rects.append(QRectF(rect.left(), y, rect.width(), gridSize));
     }
 
-    p->setBrush(gray);
+    p->setBrush(this->palette().highlight());
     p->drawRects(rects.data(), rects.size());
     p->setBrush(b);
-    p->setPen(darkGray);
+    p->setPen(QPen(this->palette().dark(), 1));
 
 
     QVarLengthArray<QLineF, 100> lines;

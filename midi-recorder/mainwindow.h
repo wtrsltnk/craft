@@ -25,16 +25,13 @@ public:
     MidiRecorder _recorder;
     MidiPlayer _player;
 
-    void SetRecorderState(RecorderState::eState state);
-
 public slots:
     void OnTimerOut();
     void OnGetReady();
-    void OnStartRecording();
-    void OnStop();
     void OnPlayback();
-    void OnChangeInput(QAction* action);
     void OnChangeInstrument();
+    void OnSubmitChangeInstrument();
+    void OnExit();
 
 private:
     Ui::MainWindow *ui;

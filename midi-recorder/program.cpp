@@ -7,6 +7,11 @@
 #include "mainwindow.h"
 #include "mixer.h"
 
+// Disable the console window with Visual Studio compilers
+#ifdef _MSC_VER
+#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+#endif
+
 void sigterm_exit(int /*sig*/)
 {
     delete [] denormalkillbuf;

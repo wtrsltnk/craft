@@ -2,7 +2,7 @@
 #include <iostream>
 
 MidiPlayer::MidiPlayer(Master* master)
-    : _master(master), _timer(0), _clip(0)
+    : _master(master), _timer(0), _nextNoteTimer(0), _clip(0)
 { }
 
 MidiPlayer::~MidiPlayer()
@@ -21,6 +21,7 @@ void MidiPlayer::Start(MidiClip* clip)
     this->_clip = clip;
     if (this->_clip != 0)
     {
+        this->_midiActions.clear();
         MidiNote* note = this->_clip->_firstNote;
         while (note != 0)
         {
@@ -67,6 +68,12 @@ void MidiPlayer::Stop()
 {
     delete this->_timer;
     this->_timer = 0;
+    if (this->_nextNoteTimer != 0)
+    {
+        delete this->_nextNoteTimer;
+        this->_nextNoteTimer = 0;
+    }
+    this->_master->ShutUp();
 }
 
 PlayerState::eState MidiPlayer::GetState()

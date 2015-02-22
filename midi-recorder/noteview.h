@@ -29,6 +29,7 @@ private:
 
     bool _pan;
     int _panStartX, _panStartY;
+    QColor _evenColor, _oddColor;
 };
 
 #endif // NOTEVIEW_H

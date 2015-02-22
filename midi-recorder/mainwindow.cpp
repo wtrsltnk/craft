@@ -3,6 +3,7 @@
 #include <iostream>
 #include <QGraphicsRectItem>
 #include <QScrollBar>
+#include <QMessageBox>
 #include "Nio/InMgr.h"
 #include "Nio/MidiIn.h"
 #include "Nio/RtEngine.h"
@@ -19,30 +20,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&this->_timer, SIGNAL(timeout()), this, SLOT(OnTimerOut()));
     connect(this->ui->btnGetReady, SIGNAL(clicked()), this, SLOT(OnGetReady()));
-    connect(this->ui->btnStart, SIGNAL(clicked()), this, SLOT(OnStartRecording()));
-    connect(this->ui->btnStop, SIGNAL(clicked()), this, SLOT(OnStop()));
     connect(this->ui->btnPlay, SIGNAL(clicked()), this, SLOT(OnPlayback()));
     connect(this->ui->btnChangeInstrument, SIGNAL(clicked()), this, SLOT(OnChangeInstrument()));
-
-    if (InMgr::getInstance().GetCurrent() != 0)
-    {
-        std::vector<std::string> v = InMgr::getInstance().GetCurrent()->GetPorts();
-        if (v.size() > 0)
-        {
-            QMenu *menu = new QMenu();
-            connect(menu ,SIGNAL(triggered(QAction*)), this, SLOT(OnChangeInput(QAction*)));
-            for (std::vector<std::string>::iterator i = v.begin(); i != v.end(); ++i)
-            {
-                QAction *a = new QAction(QString::fromStdString(*i), this);
-                menu->addAction(a);
-            }
-            this->ui->btnChangeInput->setText(QString::fromStdString(v[0]));
-            this->ui->btnChangeInput->setMenu(menu);
-        }
-    }
+    connect(this->ui->btnSelectInstrument, SIGNAL(clicked()), this, SLOT(OnSubmitChangeInstrument()));
+    connect(this->ui->actionExit, SIGNAL(triggered()), this, SLOT(OnExit()));
 
     this->_clip = new MidiClip();
-    this->SetRecorderState(this->_recorder.GetState());
 
     this->_timer.setInterval(100);
     this->_timer.start();
@@ -57,11 +40,22 @@ MainWindow::MainWindow(QWidget *parent) :
     r.setY(0);
     r.setWidth(this->ui->graphicsView->width()-15);
     this->ui->graphicsView->setSceneRect(r);
+
+    this->ui->ww->hide();
+
+    this->ui->mixer->SetMaster(&this->_master);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::OnExit()
+{
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Exiting midi-recorder...", "Are you sure?", QMessageBox::Yes | QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+        this->close();
 }
 
 void MainWindow::OnTimerOut()
@@ -120,102 +114,56 @@ void MainWindow::OnTimerOut()
 
 void MainWindow::OnGetReady()
 {
-    this->_recorder.GetReadyToRecord(this->_clip);
-    this->SetRecorderState(this->_recorder.GetState());
-}
-
-void MainWindow::OnStartRecording()
-{
-    this->_recorder.StartRecording(this->_clip);
-    this->SetRecorderState(this->_recorder.GetState());
-}
-
-void MainWindow::OnStop()
-{
-    this->_recorder.StopRecording();
-    this->_player.Stop();
-    this->SetRecorderState(this->_recorder.GetState());
+    if (this->ui->btnGetReady->isChecked())
+    {
+        this->_recorder.GetReadyToRecord(this->_clip);
+        this->ui->btnPlay->setEnabled(false);
+    }
+    else
+    {
+        this->_recorder.StopRecording();
+        this->ui->btnPlay->setEnabled(true);
+    }
 }
 
 void MainWindow::OnPlayback()
 {
-    if (this->_recorder.GetState() == RecorderState::Stopped)
+    if (this->ui->btnPlay->isChecked())
     {
         this->_player.Start(this->_clip);
-        this->SetRecorderState(this->_recorder.GetState());
-    }
-}
-
-void MainWindow::SetRecorderState(RecorderState::eState state)
-{
-    switch (state)
-    {
-    case RecorderState::Stopped:
-    {
-        if (this->_player.GetState() == PlayerState::Started)
-        {
-            this->ui->btnGetReady->setEnabled(false);
-            this->ui->btnStart->setEnabled(false);
-            this->ui->btnStop->setEnabled(true);
-            this->ui->btnPlay->setEnabled(false);
-        }
-        else
-        {
-            this->ui->btnGetReady->setEnabled(this->_clip != 0 && this->_clip->_firstNote == 0);
-            this->ui->btnStart->setEnabled(this->_clip != 0 && this->_clip->_firstNote == 0);
-            this->ui->btnStop->setEnabled(false);
-            this->ui->btnPlay->setEnabled(this->_clip != 0 && this->_clip->_firstNote != 0);
-        }
-        break;
-    }
-    case RecorderState::Ready:
-    {
         this->ui->btnGetReady->setEnabled(false);
-        this->ui->btnStart->setEnabled(false);
-        this->ui->btnStop->setEnabled(true);
-        this->ui->btnPlay->setEnabled(false);
-        break;
     }
-    case RecorderState::Started:
+    else
     {
-        this->ui->btnGetReady->setEnabled(false);
-        this->ui->btnStart->setEnabled(false);
-        this->ui->btnStop->setEnabled(true);
-        this->ui->btnPlay->setEnabled(false);
-        break;
-    }
-    }
-}
-
-void MainWindow::OnChangeInput(QAction* action)
-{
-    std::vector<std::string> v = InMgr::getInstance().GetCurrent()->GetPorts();
-    for (unsigned int i = 0; i < v.size(); i++)
-    {
-        if (action->text() == QString::fromStdString(v[i]))
-        {
-            InMgr::getInstance().GetCurrent()->SetPort(i);
-            this->ui->btnChangeInput->setText(action->text());
-            break;
-        }
+        this->_player.Stop();
+        this->ui->btnGetReady->setEnabled(true);
     }
 }
 
 void MainWindow::OnChangeInstrument()
 {
-    InstrumentSelectionDialog dlg(this->_master, this);
-    if (dlg.exec() == QDialog::Accepted)
+    this->ui->ww->show();
+    this->ui->instrumentselector->SetMaster(&this->_master);
+
+}
+
+void MainWindow::OnSubmitChangeInstrument()
+{
+    Instrument* i = this->_master.Instruments().front();
+    if (this->ui->instrumentselector->selectedSlot() < 0)
     {
-        Instrument* i = this->_master.Instruments().front();
-        if (dlg.selectedSlot() < 0)
-        {
-            i->defaultsinstrument();
-            this->ui->btnChangeInstrument->setText("[default]");
-        }
-        else
-        {
-            this->_master.bank.loadfromslot(dlg.selectedSlot(), i);
-            this->ui->btnChangeInstrument->setText(dlg.selectedInstrument());
-        }
+        pthread_mutex_lock(&i->load_mutex);
+        i->defaultsinstrument();
+        pthread_mutex_unlock(&i->load_mutex);
+        this->ui->btnChangeInstrument->setText("[default]");
     }
+    else
+    {
+        pthread_mutex_lock(&i->load_mutex);
+        this->_master.bank.loadfromslot(this->ui->instrumentselector->selectedSlot(), i);
+        i->applyparameters();
+        pthread_mutex_unlock(&i->load_mutex);
+        this->ui->btnChangeInstrument->setText(this->ui->instrumentselector->selectedInstrument());
+    }
+    this->ui->ww->hide();
 }
